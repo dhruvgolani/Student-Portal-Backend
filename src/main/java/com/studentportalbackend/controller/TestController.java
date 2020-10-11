@@ -8,6 +8,6 @@ public class TestController {
 
     @GetMapping("/user")
     public String Surya(){
-        return "Hello";
+        return "Hello Dhruv";
     }
 }
