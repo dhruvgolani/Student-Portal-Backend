@@ -1,18 +1,13 @@
 package com.studentportalbackend.util;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import java.security.SecureRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class GeneratorUtil {
 
-    @Value("${otp.length}")
-    private static Integer OTP_LENGTH = 5;
-
-    @Value("${token.length}")
-    private static Integer TOKEN_LENGTH = 20;
+    private static final Integer OTP_LENGTH = 5;
+    private static final Integer TOKEN_LENGTH = 20;
 
     static final String alphaNumeric = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     static final String numbers = "0123456789";
