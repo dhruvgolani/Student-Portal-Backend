@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import com.studentportalbackend.model.User;
 import com.studentportalbackend.service.UserService;
 
-@RestController("/api/user")
+@RequestMapping("/api/user")
+@RestController
 public class UserController {
 
 	@Autowired

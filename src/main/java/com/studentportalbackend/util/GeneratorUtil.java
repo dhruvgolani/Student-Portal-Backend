@@ -9,10 +9,10 @@ import java.util.stream.IntStream;
 public class GeneratorUtil {
 
     @Value("${otp.length}")
-    private static Integer OTP_LENGTH;
+    private static Integer OTP_LENGTH = 5;
 
     @Value("${token.length}")
-    private static Integer TOKEN_LENGTH;
+    private static Integer TOKEN_LENGTH = 20;
 
     static final String alphaNumeric = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     static final String numbers = "0123456789";
