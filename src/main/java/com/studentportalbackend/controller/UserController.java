@@ -27,9 +27,9 @@ public class UserController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/verifyOtp")
     public User verifyOtp(@RequestBody Map<String, String> req){
-		String collegeID = req.get("collegeID");
-		String receivedOTP = req.get("otp");
-        return userService.verifyNewUser(collegeID, receivedOTP);
+		String collegeId = req.get("collegeId");
+		String receivedOtp = req.get("otp");
+        return userService.verifyNewUser(collegeId, receivedOtp);
     }
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/login")
