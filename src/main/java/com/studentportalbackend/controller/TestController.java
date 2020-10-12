@@ -5,9 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestController {
-
-    @GetMapping("/user")
-    public String Surya(){
-        return "Hello Dhruv";
+    @GetMapping("/")
+    public String Test(){
+        return "Spring server started !!";
     }
 }

@@ -2,64 +2,62 @@ package com.studentportalbackend.model;
 
 import java.sql.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "users")
 public class User {
 
 	@Id
 	@GeneratedValue
-	@Column (name = "ID")
-	private int id;
+	@Column (name = "id")
+	private Integer id;
 	
-	@Column (name = "Full_Name")
+	@Column (name = "full_name")
 	private String fullName;
 	
-	@Column (name = "College_ID")
-	private String collegeID;
+	@Column (name = "college_id")
+	private String collegeId;
 	
-	@Column (name = "Email_ID")
+	@Column (name = "email_id")
 	private String emailId;
 	
-	@Column (name = "Branch")
+	@Column (name = "branch")
 	private String branch;
 	
-	@Column (name = "Passout_Batch")
+	@Column (name = "passout_batch")
 	private String passoutBatch;
 	
-	@Column (name = "Contact_Number")
+	@Column (name = "contact_number")
 	private String contactNumber;
 	
-	@Column (name = "Contribution_Points")
-	private int contributionPoints;
+	@Column (name = "contribution_points")
+	private Integer contributionPoints;
 	
-	@Column (name = "Register_OTP")
-	private String registerOTP;
+	@Column (name = "register_otp")
+	private String registerOtp;
 	
-	@Column (name = "Token")
+	@Column (name = "token")
 	private String token;
 	
-	@Column (name = "Token_Expiry")
+	@Column (name = "token_expiry")
 	private Timestamp tokenExpiry;
 	
-	@Column (name = "Password")
+	@Column (name = "password")
 	private String password;
 	
-	@Column (name = "Verified")
-	private boolean verified;
+	@Column (name = "verified")
+	private Boolean verified;
 	
-	@Column (name = "Account_Type")
+	@Column (name = "account_type")
 	private String accountType;
 	
-	@Column (name = "Registered_At")
+	@Column (name = "registered_at")
 	private Timestamp registeredAt;
 	
-	@Column (name = "Last_Login")
+	@Column (name = "last_login")
 	private Timestamp lastLogin;
-	
+
 	
 	public int getId() {
 		return id;
@@ -73,11 +71,11 @@ public class User {
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
-	public String getCollegeID() {
-		return collegeID;
+	public String getCollegeId() {
+		return collegeId;
 	}
-	public void setCollegeID(String collegeID) {
-		this.collegeID = collegeID;
+	public void setCollegeId(String collegeID) {
+		this.collegeId = collegeID;
 	}
 	public String getEmailId() {
 		return emailId;
@@ -97,7 +95,6 @@ public class User {
 	public void setPassoutBatch(String passoutBatch) {
 		this.passoutBatch = passoutBatch;
 	}
-	
 	public String getContactNumber() {
 		return contactNumber;
 	}
@@ -110,12 +107,10 @@ public class User {
 	public void setContributionPoints(int contributionPoints) {
 		this.contributionPoints = contributionPoints;
 	}
-	public String getRegisterOTP() {
-		return registerOTP;
+	public String getRegisterOtp() {
+		return registerOtp;
 	}
-	public void setRegisterOTP(String registerOTP) {
-		this.registerOTP = registerOTP;
-	}
+	public void setRegisterOtp(String registerOtp) { this.registerOtp = registerOtp; }
 	public String getToken() {
 		return token;
 	}
@@ -158,7 +153,4 @@ public class User {
 	public void setLastLogin(Timestamp lastLogin) {
 		this.lastLogin = lastLogin;
 	}
-	
-	
-	
 }
