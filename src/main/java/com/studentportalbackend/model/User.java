@@ -1,17 +1,16 @@
 package com.studentportalbackend.model;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users")
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column (name = "id")
-	private Integer id;
+	@GeneratedValue
+	@Column (name = "user_id")
+	private Integer userId;
 	
 	@Column (name = "full_name")
 	private String fullName;
@@ -41,7 +40,7 @@ public class User {
 	private String token;
 	
 	@Column (name = "token_expiry")
-	private Timestamp tokenExpiry;
+	private Date tokenExpiry;
 	
 	@Column (name = "password")
 	private String password;
@@ -53,104 +52,137 @@ public class User {
 	private String accountType;
 	
 	@Column (name = "registered_at")
-	private Timestamp registeredAt;
+	private Date registeredAt;
 	
 	@Column (name = "last_login")
-	private Timestamp lastLogin;
+	private Date lastLogin;
 
-	
-	public int getId() {
-		return id;
+
+	public Integer getUserId() {
+		return userId;
 	}
-	public void setId(int id) {
-		this.id = id;
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
+
 	public String getFullName() {
 		return fullName;
 	}
+
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
+
 	public String getCollegeId() {
 		return collegeId;
 	}
-	public void setCollegeId(String collegeID) {
-		this.collegeId = collegeID;
+
+	public void setCollegeId(String collegeId) {
+		this.collegeId = collegeId;
 	}
+
 	public String getEmailId() {
 		return emailId;
 	}
+
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
+
 	public String getBranch() {
 		return branch;
 	}
+
 	public void setBranch(String branch) {
 		this.branch = branch;
 	}
+
 	public String getPassoutBatch() {
 		return passoutBatch;
 	}
+
 	public void setPassoutBatch(String passoutBatch) {
 		this.passoutBatch = passoutBatch;
 	}
+
 	public String getContactNumber() {
 		return contactNumber;
 	}
+
 	public void setContactNumber(String contactNumber) {
 		this.contactNumber = contactNumber;
 	}
-	public int getContributionPoints() {
+
+	public Integer getContributionPoints() {
 		return contributionPoints;
 	}
-	public void setContributionPoints(int contributionPoints) {
+
+	public void setContributionPoints(Integer contributionPoints) {
 		this.contributionPoints = contributionPoints;
 	}
+
 	public String getRegisterOtp() {
 		return registerOtp;
 	}
-	public void setRegisterOtp(String registerOtp) { this.registerOtp = registerOtp; }
+
+	public void setRegisterOtp(String registerOtp) {
+		this.registerOtp = registerOtp;
+	}
+
 	public String getToken() {
 		return token;
 	}
+
 	public void setToken(String token) {
 		this.token = token;
 	}
-	public Timestamp getTokenExpiry() {
+
+	public Date getTokenExpiry() {
 		return tokenExpiry;
 	}
-	public void setTokenExpiry(Timestamp tokenExpiry) {
+
+	public void setTokenExpiry(Date tokenExpiry) {
 		this.tokenExpiry = tokenExpiry;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public boolean isVerified() {
+
+	public Boolean getVerified() {
 		return verified;
 	}
-	public void setVerified(boolean verified) {
+
+	public void setVerified(Boolean verified) {
 		this.verified = verified;
 	}
+
 	public String getAccountType() {
 		return accountType;
 	}
+
 	public void setAccountType(String accountType) {
 		this.accountType = accountType;
 	}
-	public Timestamp getRegisteredAt() {
+
+	public Date getRegisteredAt() {
 		return registeredAt;
 	}
-	public void setRegisteredAt(Timestamp registeredAt) {
+
+	public void setRegisteredAt(Date registeredAt) {
 		this.registeredAt = registeredAt;
 	}
-	public Timestamp getLastLogin() {
+
+	public Date getLastLogin() {
 		return lastLogin;
 	}
-	public void setLastLogin(Timestamp lastLogin) {
+
+	public void setLastLogin(Date lastLogin) {
 		this.lastLogin = lastLogin;
 	}
 }
