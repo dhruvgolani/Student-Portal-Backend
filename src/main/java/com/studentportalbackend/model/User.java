@@ -1,12 +1,18 @@
 package com.studentportalbackend.model;
 
 import com.studentportalbackend.model.enums.AccountTypeEnum;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.util.Date;
 
 import javax.persistence.*;
 
+
 @Entity
+@Table(name="Users")
+@Accessors(chain = true)
+@Data
 public class User {
 
 	@Id
@@ -61,113 +67,9 @@ public class User {
 	private Date lastLogin;
 
 	@PrePersist
-	void prePersist(){
+	public void prePersist(){
 		this.createdAt = new Date();
 		this.lastLogin = new Date();
-	}
-
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public String getFullName() {
-		return fullName;
-	}
-
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
-
-	public String getCollegeId() {
-		return collegeId;
-	}
-
-	public void setCollegeId(String collegeId) {
-		this.collegeId = collegeId;
-	}
-
-	public String getEmailId() {
-		return emailId;
-	}
-
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-
-	public String getBranch() {
-		return branch;
-	}
-
-	public void setBranch(String branch) {
-		this.branch = branch;
-	}
-
-	public String getPassoutBatch() {
-		return passoutBatch;
-	}
-
-	public void setPassoutBatch(String passoutBatch) {
-		this.passoutBatch = passoutBatch;
-	}
-
-	public String getContactNumber() {
-		return contactNumber;
-	}
-
-	public void setContactNumber(String contactNumber) {
-		this.contactNumber = contactNumber;
-	}
-
-	public Integer getContributionPoints() {
-		return contributionPoints;
-	}
-
-	public void setContributionPoints(Integer contributionPoints) {
-		this.contributionPoints = contributionPoints;
-	}
-
-	public String getRegisterOtp() {
-		return registerOtp;
-	}
-
-	public void setRegisterOtp(String registerOtp) {
-		this.registerOtp = registerOtp;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-	public Date getTokenExpiry() {
-		return tokenExpiry;
-	}
-
-	public void setTokenExpiry(Date tokenExpiry) {
-		this.tokenExpiry = tokenExpiry;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public Boolean getVerified() {
-		return verified;
-	}
-
-	public void setVerified(Boolean verified) {
-		this.verified = verified;
 	}
 
 	public AccountTypeEnum getAccountType() {
@@ -178,19 +80,4 @@ public class User {
 		this.accountType = AccountTypeEnum.parse(accountType);
 	}
 
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public Date getLastLogin() {
-		return lastLogin;
-	}
-
-	public void setLastLogin(Date lastLogin) {
-		this.lastLogin = lastLogin;
-	}
 }
