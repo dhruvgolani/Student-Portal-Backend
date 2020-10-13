@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     private void makeLoginContributionLog(User user){
         ContributionLog contributionLog = new ContributionLog();
-        contributionLog.setContributionPoints(0);
+        contributionLog.setContributionPoints(INITIAL_CONTRIBUTION_POINTS);
         contributionLog.setContributionType("LOGIN");
         contributionLog.setUserId(user.getUserId());
         contributionLog.setComments("Initial Login Reward");
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
         user.setEmailId(CollegeUtil.getEmailFromCollegeId(collegeId));
         user.setBranch(CollegeUtil.getBranchFromCollegeId(collegeId));
         user.setPassoutBatch(CollegeUtil.getPassoutBatchFromCollegeId(collegeId));
-        user.setContributionPoints(INITIAL_CONTRIBUTION_POINTS);
+        user.setContributionPoints(0);
         user.setRegisterOtp(GeneratorUtil.getOtp());
         user.setVerified(false);
         user.setAccountType("USER");
