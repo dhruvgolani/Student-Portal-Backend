@@ -1,6 +1,9 @@
 package com.studentportalbackend.service.impl;
 
+import com.studentportalbackend.model.ContributionLog;
 import com.studentportalbackend.model.User;
+import com.studentportalbackend.model.enums.AccountTypeEnum;
+import com.studentportalbackend.repository.ContributionLogRepository;
 import com.studentportalbackend.repository.UserRepository;
 import com.studentportalbackend.service.UserService;
 import com.studentportalbackend.util.CollegeUtil;
@@ -15,6 +18,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    ContributionLogRepository contributionLogRepository;
+
     @Value("${initial.contribution.points}")
     private Integer INITIAL_CONTRIBUTION_POINTS;
 
@@ -25,7 +31,7 @@ public class UserServiceImpl implements UserService {
         if(user == null) {
             return null;
         }
-        if(user.isVerified() && user.getPassword().equals(password)) {
+        if(user.getVerified() && user.getPassword().equals(password)) {
             return user;
         }
         return null;
@@ -34,6 +40,15 @@ public class UserServiceImpl implements UserService {
 
     // Function Associated with new user
 
+    private void makeLoginContributionLog(User user){
+        ContributionLog contributionLog = new ContributionLog();
+        contributionLog.setContributionPoints(0);
+        contributionLog.setContributionType("LOGIN");
+        contributionLog.setUserId(user.getUserId());
+        contributionLog.setComments("Initial Login Reward");
+        contributionLogRepository.save(contributionLog);
+    }
+
     private void populateNewUser(User user){
         String collegeId = user.getCollegeId();
         user.setEmailId(CollegeUtil.getEmailFromCollegeId(collegeId));
@@ -41,19 +56,15 @@ public class UserServiceImpl implements UserService {
         user.setPassoutBatch(CollegeUtil.getPassoutBatchFromCollegeId(collegeId));
         user.setContributionPoints(INITIAL_CONTRIBUTION_POINTS);
         user.setRegisterOtp(GeneratorUtil.getOtp());
-        user.setToken(null);
-        user.setTokenExpiry(null);
         user.setVerified(false);
-        user.setAccountType("user");
-        user.setRegisteredAt(null);
-        user.setLastLogin(null);
+        user.setAccountType("USER");
     }
 
     public User registerNewUser(User user) {
         String collegeId = user.getCollegeId();
         User existingUser = userRepository.findByCollegeId(collegeId);
         if(existingUser != null){
-            if(existingUser.isVerified()){
+            if(existingUser.getVerified()){
                 // TODO : Throw Exception
                 return null;
             }
@@ -70,6 +81,8 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         if(user.getRegisterOtp().equals(receivedOtp)) {
+            makeLoginContributionLog(user);
+            user.setContributionPoints(INITIAL_CONTRIBUTION_POINTS);
             user.setRegisterOtp(null);
             user.setVerified(true);
             return userRepository.save(user);
