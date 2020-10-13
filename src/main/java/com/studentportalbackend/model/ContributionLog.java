@@ -1,11 +1,16 @@
 package com.studentportalbackend.model;
 
 import com.studentportalbackend.model.enums.ContributionTypeEnum;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "contribution_log")
+@Accessors(chain = true)
+@Data
 public class ContributionLog {
 
     @Id
@@ -38,31 +43,6 @@ public class ContributionLog {
         this.created_at = new Date();
     }
 
-
-    public Integer getContributionId() {
-        return contributionId;
-    }
-
-    public void setContributionId(Integer contributionId) {
-        this.contributionId = contributionId;
-    }
-
-    public Integer getContributionPoints() {
-        return contributionPoints;
-    }
-
-    public void setContributionPoints(Integer contributionPoints) {
-        this.contributionPoints = contributionPoints;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
     public String getContributionType() {
         return contributionType.getContributionTypeEnum();
     }
@@ -71,27 +51,4 @@ public class ContributionLog {
         this.contributionType = ContributionTypeEnum.parse(contributionType);
     }
 
-    public String getContributionTypeId() {
-        return contributionTypeId;
-    }
-
-    public void setContributionTypeId(String contributionTypeId) {
-        this.contributionTypeId = contributionTypeId;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
-    public Date getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
-    }
 }
