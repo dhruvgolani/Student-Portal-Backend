@@ -1,5 +1,7 @@
 package com.studentportalbackend.model;
 
+import com.studentportalbackend.model.enums.ContributionTypeEnum;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -17,8 +19,9 @@ public class ContributionLog {
     @Column(name="user_id")
     private Integer userId;
 
-    @Column(name="contribution_type")
-    private String contributionType;
+    @Enumerated(EnumType.STRING)
+    @Column(name="contribution_type" , nullable = false)
+    private ContributionTypeEnum contributionType;
 
     @Column(name="contribution_type_id")
     private String contributionTypeId;
@@ -26,8 +29,14 @@ public class ContributionLog {
     @Column(name="comments")
     private String comments;
 
-    @Column(name="created_at")
+    @Column(name="created_at" , nullable = false, updatable = false)
     private Date created_at;
+
+
+    @PrePersist
+    public void prePersist(){
+        this.created_at = new Date();
+    }
 
 
     public Integer getContributionId() {
@@ -55,11 +64,11 @@ public class ContributionLog {
     }
 
     public String getContributionType() {
-        return contributionType;
+        return contributionType.getContributionTypeEnum();
     }
 
     public void setContributionType(String contributionType) {
-        this.contributionType = contributionType;
+        this.contributionType = ContributionTypeEnum.parse(contributionType);
     }
 
     public String getContributionTypeId() {

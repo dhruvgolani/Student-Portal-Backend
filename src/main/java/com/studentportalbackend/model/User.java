@@ -1,5 +1,7 @@
 package com.studentportalbackend.model;
 
+import com.studentportalbackend.model.enums.AccountTypeEnum;
+
 import java.util.Date;
 
 import javax.persistence.*;
@@ -12,13 +14,13 @@ public class User {
 	@Column (name = "user_id")
 	private Integer userId;
 	
-	@Column (name = "full_name")
+	@Column (name = "full_name" ,nullable = false)
 	private String fullName;
 	
-	@Column (name = "college_id")
+	@Column (name = "college_id",nullable = false, updatable = false, unique = true)
 	private String collegeId;
 	
-	@Column (name = "email_id")
+	@Column (name = "email_id",nullable = false)
 	private String emailId;
 	
 	@Column (name = "branch")
@@ -47,16 +49,22 @@ public class User {
 	
 	@Column (name = "verified")
 	private Boolean verified;
+
+	@Enumerated(EnumType.STRING)
+	@Column (name = "account_type" , nullable = false)
+	private AccountTypeEnum accountType;
 	
-	@Column (name = "account_type")
-	private String accountType;
-	
-	@Column (name = "registered_at")
-	private Date registeredAt;
+	@Column (name = "created_at" , nullable = false , updatable = false)
+	private Date createdAt;
 	
 	@Column (name = "last_login")
 	private Date lastLogin;
 
+	@PrePersist
+	void prePersist(){
+		this.createdAt = new Date();
+		this.lastLogin = new Date();
+	}
 
 	public Integer getUserId() {
 		return userId;
@@ -162,20 +170,20 @@ public class User {
 		this.verified = verified;
 	}
 
-	public String getAccountType() {
+	public AccountTypeEnum getAccountType() {
 		return accountType;
 	}
 
 	public void setAccountType(String accountType) {
-		this.accountType = accountType;
+		this.accountType = AccountTypeEnum.parse(accountType);
 	}
 
-	public Date getRegisteredAt() {
-		return registeredAt;
+	public Date getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setRegisteredAt(Date registeredAt) {
-		this.registeredAt = registeredAt;
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	public Date getLastLogin() {
