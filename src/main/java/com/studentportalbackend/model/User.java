@@ -76,8 +76,9 @@ public class User {
 		return accountType;
 	}
 
-	public void setAccountType(String accountType) {
+	public User setAccountType(String accountType) {
 		this.accountType = AccountTypeEnum.parse(accountType);
+		return  this;
 	}
 
 }

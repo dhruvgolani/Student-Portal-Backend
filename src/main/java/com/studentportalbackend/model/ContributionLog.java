@@ -47,8 +47,9 @@ public class ContributionLog {
         return contributionType.getContributionTypeEnum();
     }
 
-    public void setContributionType(String contributionType) {
+    public ContributionLog setContributionType(String contributionType) {
         this.contributionType = ContributionTypeEnum.parse(contributionType);
+        return  this;
     }
 
 }
