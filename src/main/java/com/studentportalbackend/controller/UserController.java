@@ -2,6 +2,7 @@ package com.studentportalbackend.controller;
 
 import java.util.Map;
 
+import com.studentportalbackend.dto.ResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,7 @@ import com.studentportalbackend.service.UserService;
 
 @RequestMapping("/api/user")
 @RestController
+@CrossOrigin
 public class UserController {
 
 	@Autowired
@@ -21,19 +23,19 @@ public class UserController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/register")
-    public User register(@RequestBody User user){
+    public ResponseModel register(@RequestBody User user){
 	    return userService.registerNewUser(user);
     }
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/verifyOtp")
-    public User verifyOtp(@RequestBody Map<String, String> req){
+    public ResponseModel verifyOtp(@RequestBody Map<String, String> req){
 		String collegeId = req.get("collegeId");
 		String receivedOtp = req.get("otp");
         return userService.verifyNewUser(collegeId, receivedOtp);
     }
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/login")
-    public User login(@RequestBody Map<String, String> req){
+    public ResponseModel login(@RequestBody Map<String, String> req){
 		String collegeId = req.get("collegeId");
 		String password = req.get("password");
         return userService.login(collegeId, password);
