@@ -1,10 +1,8 @@
 package com.studentportalbackend.service.impl;
 
-import com.studentportalbackend.model.ContributionLog;
 import com.studentportalbackend.model.User;
-import com.studentportalbackend.model.enums.AccountTypeEnum;
-import com.studentportalbackend.repository.ContributionLogRepository;
 import com.studentportalbackend.repository.UserRepository;
+import com.studentportalbackend.service.ContributionLogService;
 import com.studentportalbackend.service.UserService;
 import com.studentportalbackend.util.CollegeUtil;
 import com.studentportalbackend.util.GeneratorUtil;
@@ -19,7 +17,7 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Autowired
-    ContributionLogRepository contributionLogRepository;
+    ContributionLogService contributionLogService;
 
     @Value("${initial.contribution.points}")
     private Integer INITIAL_CONTRIBUTION_POINTS;
@@ -40,24 +38,16 @@ public class UserServiceImpl implements UserService {
 
     // Function Associated with new user
 
-    private void makeLoginContributionLog(User user){
-        ContributionLog contributionLog = new ContributionLog();
-        contributionLog.setContributionPoints(INITIAL_CONTRIBUTION_POINTS);
-        contributionLog.setContributionType("LOGIN");
-        contributionLog.setUserId(user.getUserId());
-        contributionLog.setComments("Initial Login Reward");
-        contributionLogRepository.save(contributionLog);
-    }
-
     private void populateNewUser(User user){
         String collegeId = user.getCollegeId();
-        user.setEmailId(CollegeUtil.getEmailFromCollegeId(collegeId));
-        user.setBranch(CollegeUtil.getBranchFromCollegeId(collegeId));
-        user.setPassoutBatch(CollegeUtil.getPassoutBatchFromCollegeId(collegeId));
-        user.setContributionPoints(0);
-        user.setRegisterOtp(GeneratorUtil.getOtp());
-        user.setVerified(false);
-        user.setAccountType("USER");
+        user
+                .setEmailId(CollegeUtil.getEmailFromCollegeId(collegeId))
+                .setBranch(CollegeUtil.getBranchFromCollegeId(collegeId))
+                .setPassoutBatch(CollegeUtil.getPassoutBatchFromCollegeId(collegeId))
+                .setContributionPoints(0)
+                .setRegisterOtp(GeneratorUtil.getOtp())
+                .setVerified(false)
+                .setAccountType("USER");
     }
 
     public User registerNewUser(User user) {
@@ -81,7 +71,7 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         if(user.getRegisterOtp().equals(receivedOtp)) {
-            makeLoginContributionLog(user);
+            contributionLogService.makeLoginContributionLog(user, INITIAL_CONTRIBUTION_POINTS);
             user.setContributionPoints(INITIAL_CONTRIBUTION_POINTS);
             user.setRegisterOtp(null);
             user.setVerified(true);
