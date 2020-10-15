@@ -1,6 +1,8 @@
 package com.studentportalbackend.service.impl;
 
 import com.studentportalbackend.dto.ResponseModel;
+import com.studentportalbackend.exception.UserAlreadyExistsException;
+import com.studentportalbackend.exception.UserNotFoundException;
 import com.studentportalbackend.model.User;
 import com.studentportalbackend.repository.UserRepository;
 import com.studentportalbackend.service.ContributionLogService;
@@ -28,34 +30,21 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public ResponseModel login(String collegeID, String password) {
+    public User login(String collegeID, String password) {
         User user = userRepository.findByCollegeId(collegeID);
-        ResponseModel response = new ResponseModel();
 
-        if(user == null) {
-            response.setSuccess(false);
-            response.setError("Sorry no user found with this College ID");
-        }
-        else if(!user.getVerified()){
-            response.setSuccess(false);
-            response.setError("Sorry user with this College ID is not yet verified");
+        if(user == null || !user.getVerified()){
+            throw new UserNotFoundException(collegeID);
         }
         else if(!user.getPassword().equals(password)) {
-            response.setSuccess(false);
-            response.setError("Invalid Credentials");
+            return null;
         }
         else{
             String loginToken = GeneratorUtil.getToken();
             user.setToken(loginToken);
             userRepository.save(user);
-
-            Map<Object, Object> data = new HashMap<>();
-            data.put("user", user);
-            data.put("token", loginToken);
-            response.setSuccess(true);
-            response.setData(data);
+            return user;
         }
-        return response;
     }
 
 
@@ -73,38 +62,30 @@ public class UserServiceImpl implements UserService {
                 .setAccountType("USER");
     }
 
-    public ResponseModel registerNewUser(User user) {
+    public Boolean registerNewUser(User user) {
         String collegeId = user.getCollegeId();
         User existingUser = userRepository.findByCollegeId(collegeId);
-        ResponseModel response = new ResponseModel();
 
         if(existingUser != null){
             if(existingUser.getVerified()){
-                // TODO : Throw Exception
-                response.setSuccess(false);
-                response.setError("User with this College Id already exists.");
-                return response;
+                throw new UserAlreadyExistsException(collegeId);
             }
             else userRepository.delete(existingUser);
         }
         populateNewUser(user);
         userRepository.save(user);
-        response.setSuccess(true);
-        return response;
+        return true;
     }
 
     @Override
-    public ResponseModel verifyNewUser(String collegeId, String receivedOtp) {
+    public User verifyNewUser(String collegeId, String receivedOtp) {
         User user = userRepository.findByCollegeId(collegeId);
-        ResponseModel response = new ResponseModel();
 
         if(user == null) {
-            response.setSuccess(false);
-            response.setError("Sorry user not found");
+            throw new UserNotFoundException(collegeId);
         }
         else if(user.getVerified()){
-            response.setSuccess(false);
-            response.setError("User already verified");
+            throw new UserAlreadyExistsException(collegeId);
         }
         else if(user.getRegisterOtp().equals(receivedOtp)) {
             contributionLogService.makeLoginContributionLog(user, INITIAL_CONTRIBUTION_POINTS);
@@ -116,16 +97,10 @@ public class UserServiceImpl implements UserService {
             user.setToken(loginToken);
             userRepository.save(user);
 
-            Map<Object, Object> data = new HashMap<>();
-            data.put("user", user);
-            data.put("token", loginToken);
-            response.setSuccess(true);
-            response.setData(data);
+            return user;
         }
         else{
-            response.setSuccess(false);
-            response.setError("OTP incorrect. Please try again");
+            return null;
         }
-        return response;
     }
 }
