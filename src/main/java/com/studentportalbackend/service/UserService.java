@@ -5,11 +5,11 @@ import com.studentportalbackend.model.User;
 
 public interface UserService {
 
-    ResponseModel login(String collegeID, String password);
+    User login(String collegeID, String password);
 
-    ResponseModel registerNewUser(User user);
+    Boolean registerNewUser(User user);
 
-    ResponseModel verifyNewUser(String collegeId, String receivedOtp);
+    User verifyNewUser(String collegeId, String receivedOtp);
 
 
 }
