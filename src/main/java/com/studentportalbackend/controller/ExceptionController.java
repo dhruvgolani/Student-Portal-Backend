@@ -23,7 +23,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
         body.put("timestamp", LocalDateTime.now());
         body.put("error", e.getMessage());
 
-        return new ResponseEntity<>(body, null);
+        return new ResponseEntity<>(body, HttpStatus.OK);
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
@@ -33,6 +33,6 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
         body.put("timestamp", LocalDateTime.now());
         body.put("error", e.getMessage());
 
-        return new ResponseEntity<>(body, null);
+        return new ResponseEntity<>(body, HttpStatus.OK);
     }
 }
