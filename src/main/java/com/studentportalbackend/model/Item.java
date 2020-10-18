@@ -52,4 +52,22 @@ public class Item {
 
     @Column (name = "last_modified")
     private Date lastModified;
+
+    @PrePersist
+    public void prePersist(){
+        this.createdAt = new Date();
+        this.status = NOT_SOLD_STATUS;
+    }
+
+    public Item(){
+
+    }
+
+    public Item(Integer sellerId, String name, String category, String usedTime, String quotedPrice) {
+        this.sellerId = sellerId;
+        this.name = name;
+        this.category = category;
+        this.usedTime = usedTime;
+        this.quotedPrice = quotedPrice;
+    }
 }

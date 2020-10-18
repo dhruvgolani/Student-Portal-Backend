@@ -29,7 +29,14 @@ public class ItemAttachment {
     @Column (name = "file_data" ,nullable = false)
     private byte[] data;
 
+    public ItemAttachment(){
 
+    }
 
-
+    public ItemAttachment(Integer itemId, String name, String type, byte[] data) {
+        this.itemId = itemId;
+        this.name = name;
+        this.type = type;
+        this.data = data;
+    }
 }
